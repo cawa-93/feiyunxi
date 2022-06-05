@@ -2,9 +2,9 @@
 
 import { ref } from "#imports";
 import { confirm as confirmMessage } from "~/config/captcha/confirm";
+import { error as errorMessage } from "~/config/captcha/error";
 import { feiyunxi } from "~/config/captcha/feiyunxi";
 import { xiao } from "~/config/captcha/xiao";
-import { error as errorMessage } from "~/config/captcha/error";
 
 const emit = defineEmits({
   'passed': null,

@@ -7,11 +7,22 @@ const props = defineProps<{
   set: PicSet
 }>();
 
-const pics = useRuntimeConfig().public.imageSet[props.set];
+const picSet = useRuntimeConfig().public.imageSet[props.set];
+const picLoveSet = useRuntimeConfig().public.imageLoveSet[props.set];
+
+
+const lovePicLeft = ref(0);
+
+
+const pics = computed(() => lovePicLeft.value ? picLoveSet : picSet);
+
 const selectedPic = ref(null);
-const selectPic = () => selectedPic.value = pics[Math.floor(Math.random() * pics.length)];
+const selectPic = () => {
+  lovePicLeft.value = lovePicLeft.value > 0 ? lovePicLeft.value - 1 : 0;
+  return selectedPic.value = pics.value[Math.floor(Math.random() * pics.value.length)];
+};
 selectPic();
-const selectedPicURL = computed(() => selectedPic.value ? `/images/${props.set}/${selectedPic.value}` : null);
+const selectedPicURL = computed(() => selectedPic.value ? selectedPic.value : null);
 
 document.addEventListener('click', selectPic);
 onBeforeUnmount(() => document.removeEventListener('click', selectPic));
@@ -19,7 +30,8 @@ onBeforeUnmount(() => document.removeEventListener('click', selectPic));
 
 <template>
   <div>
-    <img v-if="selectedPicURL" :src="selectedPicURL">
+    <button @click="lovePicLeft = 5">LOVE</button>
+    <img v-if="selectedPicURL" :src="selectedPicURL" alt="Супер СЕКСИ Мужик">
   </div>
 </template>
 
