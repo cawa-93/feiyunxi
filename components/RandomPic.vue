@@ -69,6 +69,7 @@ div {
   position: relative;
   width: auto;
   display: inline-block;
+  overflow: hidden;
 }
 
 img {
@@ -76,5 +77,6 @@ img {
   max-width: 100vw;
   width: auto;
   height: auto;
+  vertical-align: middle;
 }
 </style>

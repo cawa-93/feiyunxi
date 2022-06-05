@@ -25,38 +25,40 @@ const captchaPassedHandler = (selectedPicSet: PicSet) => {
   </div>
 </template>
 
-<style lang="scss">
-@import "../node_modules/bootstrap/scss/functions";
+<style>
+*, ::after, ::before {
+  box-sizing: border-box;
+}
 
-// 2. Include any default variable overrides here
+:root {
+  scroll-behavior: smooth;
+}
 
-// 3. Include remainder of required Bootstrap stylesheets
-@import "../node_modules/bootstrap/scss/variables";
-
-// 4. Include any default map overrides here
-
-// 5. Include remainder of required parts
-@import "../node_modules/bootstrap/scss/maps";
-@import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/root";
-@import "../node_modules/bootstrap/scss/reboot";
-</style>
+body {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}</style>
 
 <style scoped lang="scss">
-@import "../node_modules/bootstrap/scss/functions";
-
-// 2. Include any default variable overrides here
-
-// 3. Include remainder of required Bootstrap stylesheets
-@import "../node_modules/bootstrap/scss/variables";
-
-// 4. Include any default map overrides here
-
-// 5. Include remainder of required parts
-@import "../node_modules/bootstrap/scss/maps";
-@import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/root";
-
+//@import "../node_modules/bootstrap/scss/functions";
+//
+//// 2. Include any default variable overrides here
+//
+//// 3. Include remainder of required Bootstrap stylesheets
+//@import "../node_modules/bootstrap/scss/variables";
+//
+//// 4. Include any default map overrides here
+//
+//// 5. Include remainder of required parts
+//@import "../node_modules/bootstrap/scss/maps";
+//@import "../node_modules/bootstrap/scss/mixins";
+//@import "../node_modules/bootstrap/scss/root";
+//
 
 .component-root {
   min-height     : 100vh;
