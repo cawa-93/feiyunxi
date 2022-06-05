@@ -4,7 +4,6 @@ import RandomPic from "~/components/RandomPic.vue";
 import { PicSet, picSets } from "~/picSets";
 
 
-
 const savedValue = sessionStorage.getItem('isCaptchaWasPassed');
 const picSet = ref<PicSet | null>(
     savedValue && picSets.includes(savedValue as any)
@@ -60,10 +59,11 @@ const captchaPassedHandler = (selectedPicSet: PicSet) => {
 
 
 .component-root {
-  min-height     : 100vh;
-  display        : flex;
-  flex-direction : column;
-  place-content  : center;
-  place-items    : center;
+  background-color : black;
+  display          : flex;
+  flex-direction   : column;
+  min-height       : 100vh;
+  place-content    : center;
+  place-items      : center;
 }
 </style>
