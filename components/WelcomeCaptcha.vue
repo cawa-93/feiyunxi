@@ -21,7 +21,7 @@ const submitHandler = () => {
 <template>
   <form @submit.prevent="submitHandler">
     <div>
-      <label for="question" class="form-label">Имя самого лучшего мужчины на планете:</label>
+      <label for="question" class="form-label">Имя самого красивого мужчины на планете:</label>
       <input type="text" class="form-control form-control-lg" id="question" required>
     </div>
 
