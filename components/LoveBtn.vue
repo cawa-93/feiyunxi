@@ -12,7 +12,6 @@ let shownTimer = null;
 let hideTimer = null;
 
 const enableLoveButton = () => {
-  console.log('enableLoveButton');
   lovePosition.value = {
     [(rand(['top', 'bottom']))]: `${randNum(100)}%`,
     [(rand(['left', 'right']))]: `${randNum(100)}%`,
@@ -21,7 +20,6 @@ const enableLoveButton = () => {
 };
 
 onMounted(() => {
-  console.log('MOUNTED');
   shownTimer = setTimeout(enableLoveButton, TimeoutBeforeShown * 1000);
 });
 
