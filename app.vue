@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-import { ref } from "#imports";
+import { ref, useHead } from "#imports";
 import { PicSet, picSets } from "~/picSets";
 
-// const randomPicAsync = defineAsyncComponent(() => import('~/components/RandomPic.vue'));
+
+useHead({
+  title: 'Alice\'s wonderland',
+});
 
 const loading = ref(true);
 const set = ref<string[]>([]);
