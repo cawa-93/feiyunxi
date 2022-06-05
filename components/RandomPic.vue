@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { computed, useFetch } from "#imports";
+import { useRuntimeConfig } from "#app";
+import { computed } from "#imports";
 
-const {data: pics} = await useFetch('/api/feiyunxi');
+const pics = useRuntimeConfig().public.imageSet.feiyunxi;
 const selectedPic = ref(null);
-const selectPic = () => selectedPic.value = pics.value[Math.floor(Math.random() * pics.value.length)];
+const selectPic = () => selectedPic.value = pics[Math.floor(Math.random() * pics.length)];
 selectPic();
 const selectedPicURL = computed(() => selectedPic.value ? `/images/feiyunxi/${selectedPic.value}` : null);
 </script>
