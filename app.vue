@@ -1,21 +1,28 @@
 <script lang="ts" setup>
-
 import { ref } from "#imports";
 import RandomPic from "~/components/RandomPic.vue";
+import { PicSet, picSets } from "~/picSets";
 
-const isCaptchaPassed = ref( sessionStorage.getItem('isCaptchaWasPassed') === '1' )
 
-const captchaPassedHandler = () => {
-  sessionStorage.setItem('isCaptchaWasPassed', '1')
-  isCaptchaPassed.value = true
-}
+
+const savedValue = sessionStorage.getItem('isCaptchaWasPassed');
+const picSet = ref<PicSet | null>(
+    savedValue && picSets.includes(savedValue as any)
+        ? savedValue as PicSet
+        : null,
+);
+
+const captchaPassedHandler = (selectedPicSet: PicSet) => {
+  sessionStorage.setItem('isCaptchaWasPassed', selectedPicSet);
+  picSet.value = selectedPicSet;
+};
 
 </script>
 
 <template>
   <div class="component-root">
-    <welcome-captcha v-if="!isCaptchaPassed" class="welcome-captcha" @passed="captchaPassedHandler"/>
-    <random-pic v-else/>
+    <welcome-captcha v-if="!picSet" class="welcome-captcha" @passed="captchaPassedHandler"/>
+    <random-pic :set="picSet" v-else/>
   </div>
 </template>
 
@@ -53,10 +60,10 @@ const captchaPassedHandler = () => {
 
 
 .component-root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  place-items: center;
+  min-height     : 100vh;
+  display        : flex;
+  flex-direction : column;
+  place-content  : center;
+  place-items    : center;
 }
 </style>

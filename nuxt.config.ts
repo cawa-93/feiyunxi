@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             imageSet: {
-                feiyunxi: fs.readdirSync('./public/images/feiyunxi')
+                feiyunxi: fs.readdirSync('./public/images/feiyunxi'),
+                xiao: fs.readdirSync('./public/images/xiao'),
             }
         }
     }

@@ -1,20 +1,41 @@
 <script lang="ts" setup>
 
+import { ref } from "#imports";
+import { confirm as confirmMessage } from "~/config/captcha/confirm";
+import { feiyunxi } from "~/config/captcha/feiyunxi";
+import { xiao } from "~/config/captcha/xiao";
+import { error as errorMessage } from "~/config/captcha/error";
+
 const emit = defineEmits({
   'passed': null,
 });
 
+const caseInSensCompare = (a: string, b: string): boolean => a.toLowerCase().trim() === b.toLowerCase().trim();
 
-const isAnswerCorrect = () => {
-  // TODO: Перевірити правильнітсь відповіді
-  return true;
-};
+const setMatch = (set: string[], search: string) => set.some((s) => caseInSensCompare(s, search));
 
+const answer = ref('');
+const error = ref('');
 const submitHandler = () => {
-  if (isAnswerCorrect()) {
-    emit('passed');
+  if (!confirm(confirmMessage)) {
+    return;
   }
 
+  if (!answer.value) {
+    error.value = errorMessage;
+  }
+
+  if (setMatch(xiao, answer.value)) {
+    emit('passed', 'xiao');
+    return;
+  }
+
+  if (setMatch(feiyunxi, answer.value)) {
+    emit('passed', 'feiyunxi');
+    return;
+  }
+
+  error.value = errorMessage;
 };
 </script>
 
@@ -22,7 +43,16 @@ const submitHandler = () => {
   <form @submit.prevent="submitHandler">
     <div>
       <label for="question" class="form-label">Имя самого красивого мужчины на планете:</label>
-      <input type="text" class="form-control form-control-lg" id="question" required>
+      <input :class="{'is-invalid': !!error}"
+             v-model.trim="answer"
+             type="text"
+             class="form-control form-control-lg"
+             id="question"
+             required>
+      <div class="invalid-feedback" v-if="error">
+        {{ error }}
+      </div>
+
     </div>
 
     <button type="submit" class="btn btn-danger btn-lg">Да!</button>
