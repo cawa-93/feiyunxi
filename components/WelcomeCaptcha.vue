@@ -50,7 +50,6 @@ const submitHandler = () => {
 
 // 6. Optionally include any other parts as needed
 //@import "../node_modules/bootstrap/scss/utilities";
-@import "../node_modules/bootstrap/scss/reboot";
 //@import "../node_modules/bootstrap/scss/type";
 @import "../node_modules/bootstrap/scss/forms";
 @import "../node_modules/bootstrap/scss/buttons";
