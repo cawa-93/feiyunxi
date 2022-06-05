@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { defineNuxtConfig } from 'nuxt';
+import { VitePWA } from 'vite-plugin-pwa';
 
 
 
@@ -25,4 +26,23 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  vite: {
+    plugins: [
+      VitePWA({
+        manifest: {
+          lang: 'ru',
+        },
+        base: '/',
+        includeAssets: [
+          ...getImages('images/feiyunxi'),
+          ...getImages('images/xiao'),
+          ...getImages('images/love/feiyunxi'),
+          ...getImages('images/love/xiao'),
+        ],
+      }),
+    ],
+  },
+
+  // plugins:
 });
