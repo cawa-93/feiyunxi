@@ -1,18 +1,14 @@
 <script lang="ts" setup>
-import { defineAsyncComponent, ref, useHead } from "#imports";
+import { defineAsyncComponent, ref } from "#imports";
 import { PicSet, picSets } from "~/picSets";
 
 const randomPicAsync = defineAsyncComponent(() => import('~/components/RandomPic.vue'));
 
-useHead({
-  title: 'Alice\'s Wonderland',
-});
-
 const savedValue = sessionStorage.getItem('isCaptchaWasPassed');
 const picSet = ref<PicSet | null>(
-  savedValue && picSets.includes(savedValue as any)
-    ? savedValue as PicSet
-    : null,
+    savedValue && picSets.includes(savedValue as any)
+        ? savedValue as PicSet
+        : null,
 );
 
 const captchaPassedHandler = (selectedPicSet: PicSet) => {
