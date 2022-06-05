@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "build": "node ./prebuild-sets.mjs && nuxt build",
+    "dev": "node ./prebuild-sets.mjs && nuxt dev",
+    "generate": "node ./prebuild-sets.mjs && nuxt generate",
+    "preview": "node ./prebuild-sets.mjs && nuxt preview"
   },
   "devDependencies": {
     "nuxt": "3.0.0-rc.3"

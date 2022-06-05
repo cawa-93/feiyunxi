@@ -1,27 +1,58 @@
 <script lang="ts" setup>
-import { defineAsyncComponent, ref } from "#imports";
+import { ref } from "#imports";
 import { PicSet, picSets } from "~/picSets";
 
-const randomPicAsync = defineAsyncComponent(() => import('~/components/RandomPic.vue'));
+// const randomPicAsync = defineAsyncComponent(() => import('~/components/RandomPic.vue'));
+
+const loading = ref(true);
+const set = ref<string[]>([]);
+const loveSet = ref<string[]>([]);
+
+
+
+async function loadSet(name: PicSet) {
+  loading.value = true;
+  try {
+
+    switch (name) {
+      case "feiyunxi":
+        await import('~/feiyunxi').then(m => {
+          set.value = m.set;
+          loveSet.value = m.loveSet;
+        });
+        break;
+      case "xiao":
+        await import('~/xiao').then(m => {
+          set.value = m.set;
+          loveSet.value = m.loveSet;
+        });
+        break;
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+
 
 const savedValue = sessionStorage.getItem('isCaptchaWasPassed');
-const picSet = ref<PicSet | null>(
-    savedValue && picSets.includes(savedValue as any)
-        ? savedValue as PicSet
-        : null,
-);
+if (savedValue && picSets.includes(savedValue as any)) {
+  loadSet(savedValue as PicSet);
+} else {
+  loading.value = false;
+}
 
 const captchaPassedHandler = (selectedPicSet: PicSet) => {
   sessionStorage.setItem('isCaptchaWasPassed', selectedPicSet);
-  picSet.value = selectedPicSet;
+  loadSet(selectedPicSet);
 };
 
 </script>
 
 <template>
-  <div class="component-root">
-    <welcome-captcha v-if="!picSet" class="welcome-captcha" @passed="captchaPassedHandler"/>
-    <random-pic-async v-else :set="picSet"/>
+  <div v-if="!loading" class="component-root">
+    <welcome-captcha v-if="!set.length" class="welcome-captcha" @passed="captchaPassedHandler"/>
+    <random-pic v-else :love-set="loveSet" :set="set"/>
   </div>
 </template>
 

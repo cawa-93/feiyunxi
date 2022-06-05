@@ -1,18 +1,14 @@
 <script lang="ts" setup>
-import { useRuntimeConfig } from "#app";
 import { computed, onBeforeUnmount, ref } from "#imports";
-import { PicSet } from "~/picSets";
 import { rand } from "~/rand";
 
 const props = defineProps<{
-  set: PicSet
+  set: string[],
+  loveSet: string[]
 }>();
 
-const picSet = useRuntimeConfig().public.imageSet[props.set];
-const picLoveSet = useRuntimeConfig().public.imageLoveSet[props.set];
 
-
-const pics = computed(() => lovePicLeft.value ? picLoveSet : picSet);
+const pics = computed(() => lovePicLeft.value ? props.loveSet : props.set);
 
 const selectedPicURL = ref(null);
 const nextPic = ref<string | null>(null);
