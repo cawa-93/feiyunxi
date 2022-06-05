@@ -11,7 +11,8 @@ const loading = ref(true);
 const set = ref<string[]>([]);
 const loveSet = ref<string[]>([]);
 
-
+const feiyunxiPromise = import('~/feiyunxi')
+const xiaoPromise = import('~/xiao')
 
 async function loadSet(name: PicSet) {
   loading.value = true;
@@ -19,13 +20,13 @@ async function loadSet(name: PicSet) {
 
     switch (name) {
       case "feiyunxi":
-        await import('~/feiyunxi').then(m => {
+        await feiyunxiPromise.then(m => {
           set.value = m.set;
           loveSet.value = m.loveSet;
         });
         break;
       case "xiao":
-        await import('~/xiao').then(m => {
+        await xiaoPromise.then(m => {
           set.value = m.set;
           loveSet.value = m.loveSet;
         });
