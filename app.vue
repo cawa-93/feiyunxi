@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { ref } from "#imports";
-import RandomPic from "~/components/RandomPic.vue";
+import { defineAsyncComponent, ref } from "#imports";
 import { PicSet, picSets } from "~/picSets";
 
+const randomPicAsync = defineAsyncComponent(() => import('~/components/RandomPic.vue'));
 
 const savedValue = sessionStorage.getItem('isCaptchaWasPassed');
 const picSet = ref<PicSet | null>(
@@ -21,7 +21,7 @@ const captchaPassedHandler = (selectedPicSet: PicSet) => {
 <template>
   <div class="component-root">
     <welcome-captcha v-if="!picSet" class="welcome-captcha" @passed="captchaPassedHandler"/>
-    <random-pic :set="picSet" v-else/>
+    <random-pic-async v-else :set="picSet"/>
   </div>
 </template>
 
