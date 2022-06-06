@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { onBeforeUnmount, onMounted, ref, watch } from "#imports";
-import { TimeoutBeforeHide, TimeoutBeforeShown } from "~/config/loveBtn";
-import { rand, randNum } from "~/rand";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { TimeoutBeforeHide, TimeoutBeforeShown } from "../config/loveBtn";
+import { rand, randNum } from "../helpers/rand";
 
 const lovePosition = ref(null);
 
 /**
  * Shown timer
  */
-let shownTimer = null;
-let hideTimer = null;
+let shownTimer: number = 0;
+let hideTimer: number = 0;
 
 const enableLoveButton = () => {
   lovePosition.value = {

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, ref } from "#imports";
-import { rand } from "~/rand";
+import { computed, onBeforeUnmount, ref } from "vue";
+import { rand } from "../helpers/rand";
+import LoveBtn from "./LoveBtn.vue";
 
 const props = defineProps<{
   set: string[],

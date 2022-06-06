@@ -1,12 +1,17 @@
 {
   "private": true,
   "scripts": {
-    "build": "node ./prebuild-sets.mjs && nuxt build",
-    "dev": "node ./prebuild-sets.mjs && nuxt dev",
-    "generate": "node ./prebuild-sets.mjs && nuxt generate",
-    "preview": "node ./prebuild-sets.mjs && nuxt preview"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.25"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.3"
+    "@vitejs/plugin-vue": "^2.3.3",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7"
   }
 }

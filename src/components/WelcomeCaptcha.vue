@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 
-import { ref } from "#imports";
-import { confirm as confirmMessage } from "~/config/captcha/confirm";
-import { error as errorMessage } from "~/config/captcha/error";
-import { feiyunxi } from "~/config/captcha/feiyunxi";
-import { xiao } from "~/config/captcha/xiao";
+import { ref } from "vue";
+import { confirm as confirmMessage } from "../config/captcha/confirm";
+import { error as errorMessage } from "../config/captcha/error";
+import { feiyunxi } from "../config/captcha/feiyunxi";
+import { xiao } from "../config/captcha/xiao";
 
 const emit = defineEmits({
   'passed': null,
