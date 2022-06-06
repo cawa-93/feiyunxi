@@ -11,7 +11,7 @@ const props = defineProps<{
 
 const pics = computed(() => lovePicLeft.value ? props.loveSet : props.set);
 
-const selectedPicURL = ref(null);
+const selectedPicURL = ref<string | null>(null);
 const nextPic = ref<string | null>(null);
 
 const picsExceptSelected = computed(() => {
@@ -45,7 +45,7 @@ onBeforeUnmount(() => document.removeEventListener('click', selectPic));
   <div>
     <love-btn v-if="!lovePicLeft" @click.stop="enableLove"></love-btn>
     <img v-if="selectedPicURL" :key="selectedPicURL" :src="selectedPicURL" alt="Супер СЕКСИ Мужик">
-    <img :key="nextPic" :src="nextPic" alt="" class="visually-hidden">
+    <img v-if="nextPic" :key="nextPic" :src="nextPic" alt="" class="visually-hidden">
   </div>
 </template>
 

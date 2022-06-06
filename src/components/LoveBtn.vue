@@ -3,7 +3,8 @@ import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { TimeoutBeforeHide, TimeoutBeforeShown } from "../config/loveBtn";
 import { rand, randNum } from "../helpers/rand";
 
-const lovePosition = ref(null);
+type Position = { [s: string]: string, transform: string }
+const lovePosition = ref<(Position) | null>(null);
 
 /**
  * Shown timer
