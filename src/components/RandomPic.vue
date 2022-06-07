@@ -29,7 +29,6 @@ const enableLove = () => {
   alert('Режим ЛЮБВИ');
   alert('АКТЕВИРОВАН!');
   alert('А-А-А-А');
-  navigator.vibrate(500);
   nextPic.value = null;
   lovePicLeft.value = 5;
   selectPic();
@@ -39,7 +38,10 @@ const selectPic = () => {
   lovePicLeft.value = lovePicLeft.value > 0 ? lovePicLeft.value - 1 : 0;
   selectedPicURL.value = nextPic.value || rand(picsExceptSelected.value);
   nextPic.value = rand(picsExceptSelected.value);
-  navigator.vibrate(100);
+
+  if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
+    navigator.vibrate(100);
+  }
 };
 selectPic();
 
