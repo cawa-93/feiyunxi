@@ -14,8 +14,8 @@ let hideTimer: number = 0;
 
 const enableLoveButton = () => {
   lovePosition.value = {
-    [(rand(['top', 'bottom']))]: `${randNum(100)}%`,
-    [(rand(['left', 'right']))]: `${randNum(100)}%`,
+    [(rand(['top', 'bottom']))]: `${randNum(50)}%`,
+    [(rand(['left', 'right']))]: `${randNum(50)}%`,
     'transform': `rotate(${randNum(45, -45)}deg)`,
   };
 };
