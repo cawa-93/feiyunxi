@@ -25,6 +25,11 @@ const picsExceptSelected = computed(() => {
 
 const lovePicLeft = ref(0);
 const enableLove = () => {
+  alert('Внимание');
+  alert('Режим ЛЮБВИ');
+  alert('АКТЕВИРОВАН!');
+  navigator.vibrate(500);
+  alert('А-А-А-А');
   nextPic.value = null;
   lovePicLeft.value = 5;
   selectPic();
@@ -34,6 +39,9 @@ const selectPic = () => {
   lovePicLeft.value = lovePicLeft.value > 0 ? lovePicLeft.value - 1 : 0;
   selectedPicURL.value = nextPic.value || rand(picsExceptSelected.value);
   nextPic.value = rand(picsExceptSelected.value);
+  if (lovePicLeft.value) {
+    navigator.vibrate(100);
+  }
 };
 selectPic();
 
