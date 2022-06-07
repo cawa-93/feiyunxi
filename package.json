@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tunnel": "npx localtunnel --port 3000"
   },
   "dependencies": {
     "vue": "^3.2.25"
