@@ -25,10 +25,6 @@ const picsExceptSelected = computed(() => {
 
 const lovePicLeft = ref(0);
 const enableLove = () => {
-  alert('Внимание');
-  alert('Режим ЛЮБВИ');
-  alert('АКТЕВИРОВАН!');
-  alert('А-А-А-А');
   nextPic.value = null;
   lovePicLeft.value = 5;
   selectPic();
