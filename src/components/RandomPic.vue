@@ -32,7 +32,12 @@ const enableLove = () => {
 };
 
 const selectPic = () => {
-  lovePicLeft.value = lovePicLeft.value > 0 ? lovePicLeft.value - 1 : 0;
+  if (lovePicLeft.value === 1) {
+    nextPic.value = null;
+    lovePicLeft.value = 0;
+  } else if (lovePicLeft.value > 1) {
+    lovePicLeft.value--;
+  }
   selectedPicURL.value = nextPic.value || rand(picsExceptSelected.value);
   nextPic.value = rand(picsExceptSelected.value);
 
