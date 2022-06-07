@@ -5,7 +5,6 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-const svg = ref();
 let flakes = [];
 let canvas = ref<HTMLCanvasElement | undefined>();
 let ctx = null;
@@ -35,9 +34,7 @@ function snow() {
       x2 = flake.x,
       y2 = flake.y;
 
-    var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y)),
-      dx = x2 - x,
-      dy = y2 - y;
+    var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
 
     if (dist < minDist) {
       var force = minDist / (dist * dist),
@@ -56,37 +53,32 @@ function snow() {
       flake.velX += Math.cos(flake.step += .05) * flake.stepSize;
     }
 
-    // https://abs-0.twimg.com/emoji/v2/svg/2764.svg
-    // image.height = flake.size * 2
-    // image.width = flake.size * 2
-    // ctx.drawImage(image, flake.x, flake.y, flake.size * 2, flake.size * 2 )
     ctx.fillStyle = 'rgba(221,46,68,' + flake.opacity + ')';
     flake.y += flake.velY;
     flake.x += flake.velX;
 
-    if (flake.y >= canvas.value.height || flake.y <= 0) {
+    if (flake.y >= canvas.value.height || flake.y <= -canvas.value.height) {
       reset(flake);
     }
 
-    if (flake.x >= canvas.value.width || flake.x <= 0) {
+    if (flake.x >= canvas.value.width || flake.x <= -50) {
       reset(flake);
     }
 
     const path2 = new Path2D();
     let m = new DOMMatrix(`translate(${flake.x}px,${flake.y}px) scale(${2 / flake.size})`);
-    path2.moveTo(flake.x, flake.y);
     path2.addPath(p, m);
     ctx.fill(path2);
   }
 
-  if (isMounded) requestAnimationFrame(snow);
+  if (isMounded && canvas.value) requestAnimationFrame(snow);
 };
 
 
 
 function reset(flake) {
   flake.x = Math.floor(Math.random() * canvas.value.width);
-  flake.y = 0;
+  flake.y = -50;
   flake.size = (Math.random() * 3) + 2;
   flake.speed = (Math.random() * 1) + 0.5;
   flake.velY = flake.speed;
@@ -100,11 +92,11 @@ function init() {
   ctx = canvas.value?.getContext('2d');
 
   for (var i = 0; i < flakeCount; i++) {
-    var x = Math.floor(Math.random() * canvas.value.width),
-      y = Math.floor(Math.random() * canvas.value.height),
-      size = (Math.random() * 3) + 2,
-      speed = (Math.random() * 1) + 0.5,
-      opacity = (Math.random() * 0.5) + 0.3;
+    var x = Math.floor(Math.random() * canvas.value.width);
+    var y = Math.floor(Math.random() * canvas.value.height) - canvas.value.height;
+    var size = (Math.random() * 3) + 2;
+    var speed = (Math.random() * 1) + 0.5;
+    var opacity = (Math.random() * 0.5) + 0.3;
 
     flakes.push({
       speed: speed,

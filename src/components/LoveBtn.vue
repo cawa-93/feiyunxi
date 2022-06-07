@@ -53,5 +53,6 @@ button {
   position: absolute;
   background: none;
   border: none;
+  cursor: pointer;
 }
 </style>
