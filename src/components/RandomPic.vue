@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, ref } from "vue";
 import { rand } from "../helpers/rand";
 import LoveBtn from "./LoveBtn.vue";
+import LoveSnow from "./LoveSnow.vue";
 
 const props = defineProps<{
   set: string[],
@@ -50,6 +51,7 @@ onBeforeUnmount(() => document.removeEventListener('click', selectPic));
     <love-btn v-if="!lovePicLeft" @click.stop="enableLove"></love-btn>
     <img v-if="selectedPicURL" :key="selectedPicURL" :src="selectedPicURL" alt="Супер СЕКСИ Мужик">
     <img v-if="nextPic" :key="nextPic" :src="nextPic" alt="" class="visually-hidden">
+    <love-snow v-if="lovePicLeft"/>
   </div>
 </template>
 
