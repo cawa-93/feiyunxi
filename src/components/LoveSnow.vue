@@ -10,23 +10,46 @@ const props = defineProps<{
   color: string
 }>();
 
-interface Flake {
-  x: number,
-  y: number,
-  size: number,
-  speed: number,
-  velY: number,
-  velX: number,
-  opacity: number,
-  stepSize: number,
-  step: number
-  rotation: number
-  rotationDirection: 1 | -1
-}
-
-let flakes: Flake[] = [];
 let canvas = ref<HTMLCanvasElement | undefined>();
 let ctx: CanvasRenderingContext2D | null = null;
+
+class Flake {
+  x: number;
+  y: number;
+  size: number;
+  speed: number;
+  velY: number;
+  velX: number;
+  opacity: number;
+  stepSize: number;
+  step: number;
+  rotation: number;
+  rotationDirection: 1 | -1;
+
+
+
+  constructor({
+                x = Math.floor(Math.random() * window.innerWidth),
+                y = Math.floor(Math.random() * window.innerHeight) - window.innerHeight,
+              } = {}) {
+    let speed = (Math.random()) + 0.5;
+
+    this.speed = speed;
+    this.velY = speed;
+    this.velX = 0;
+    this.x = x;
+    this.y = y;
+    this.size = (Math.random() * 3) + 2;
+    this.stepSize = (Math.random()) / 30;
+    this.step = 0;
+    this.opacity = (Math.random() * 0.5) + 0.3;
+    this.rotation = Math.random() * 360;
+    this.rotationDirection = Math.random() >= 0.5 ? 1 : -1;
+  }
+}
+
+
+let flakes: Flake[] = [];
 let flakeCount = Math.round(window.innerHeight * window.innerWidth / 10000); //100;
 console.log({flakeCount});
 let mX = -100;
@@ -51,20 +74,20 @@ function snow() {
   ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
 
   for (let i = 0; i < flakeCount; i++) {
-    let flake = flakes[i],
-      x = mX,
-      y = mY,
-      minDist = 150,
-      x2 = flake.x,
-      y2 = flake.y;
+    let flake = flakes[i];
+    let x = mX;
+    let y = mY;
+    let minDist = 150;
+    let x2 = flake.x;
+    let y2 = flake.y;
 
     let dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
 
     if (dist < minDist) {
-      let force = minDist / (dist * dist),
-        xcomp = (x - x2) / dist,
-        ycomp = (y - y2) / dist,
-        deltaV = force / 2;
+      let force = minDist / (dist * dist);
+      let xcomp = (x - x2) / dist;
+      let ycomp = (y - y2) / dist;
+      let deltaV = force / 2;
 
       flake.velX -= deltaV * xcomp;
       flake.velY -= deltaV * ycomp;
@@ -81,13 +104,12 @@ function snow() {
     flake.y += flake.velY;
     flake.x += flake.velX;
 
-    if (flake.y >= canvas.value.height || flake.y <= -canvas.value.height) {
-      reset(flake);
+    if (
+      flake.y >= canvas.value.height + 50 || flake.y <= -canvas.value.height || flake.x >= canvas.value.width + 50 || flake.x <= -50
+    ) {
+      flakes[i] = new Flake({y: -50});
     }
 
-    if (flake.x >= canvas.value.width || flake.x <= -50) {
-      reset(flake);
-    }
 
     flake.rotation += flake.speed * flake.rotationDirection;
 
@@ -102,45 +124,13 @@ function snow() {
 
 
 
-function reset(flake: Flake) {
-  if (!canvas.value) return;
-
-  flake.x = Math.floor(Math.random() * canvas.value.width);
-  flake.y = -50;
-  flake.size = (Math.random() * 3) + 2;
-  flake.speed = (Math.random()) + 0.5;
-  flake.velY = flake.speed;
-  flake.velX = 0;
-  flake.opacity = (Math.random() * 0.5) + 0.3;
-}
-
-
-
 function init() {
   if (!canvas.value) return;
 
   ctx = canvas.value?.getContext('2d');
 
   for (let i = 0; i < flakeCount; i++) {
-    let x = Math.floor(Math.random() * canvas.value.width);
-    let y = Math.floor(Math.random() * canvas.value.height) - canvas.value.height;
-    let size = (Math.random() * 3) + 2;
-    let speed = (Math.random()) + 0.5;
-    let opacity = (Math.random() * 0.5) + 0.3;
-
-    flakes.push({
-      speed: speed,
-      velY: speed,
-      velX: 0,
-      x: x,
-      y: y,
-      size: size,
-      stepSize: (Math.random()) / 30,
-      step: 0,
-      opacity: opacity,
-      rotation: Math.random() * 360,
-      rotationDirection: Math.random() >= 0.5 ? 1 : -1,
-    });
+    flakes.push(new Flake());
   }
 
   snow();
