@@ -27,7 +27,8 @@ interface Flake {
 let flakes: Flake[] = [];
 let canvas = ref<HTMLCanvasElement | undefined>();
 let ctx: CanvasRenderingContext2D | null = null;
-let flakeCount = 100;
+let flakeCount = Math.round(window.innerHeight * window.innerWidth / 10000); //100;
+console.log({flakeCount});
 let mX = -100;
 let mY = -100;
 
