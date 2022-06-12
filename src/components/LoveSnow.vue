@@ -10,9 +10,23 @@ const props = defineProps<{
   color: string
 }>();
 
-let flakes = [];
+interface Flake {
+  x: number,
+  y: number,
+  size: number,
+  speed: number,
+  velY: number,
+  velX: number,
+  opacity: number,
+  stepSize: number,
+  step: number
+  rotation: number
+  rotationDirection: 1 | -1
+}
+
+let flakes: Flake[] = [];
 let canvas = ref<HTMLCanvasElement | undefined>();
-let ctx = null;
+let ctx: CanvasRenderingContext2D | null = null;
 let flakeCount = 100;
 let mX = -100;
 let mY = -100;
@@ -28,24 +42,25 @@ for (const string of props.path) {
 
 
 function snow() {
-  if (!canvas.value) {
+  if (!canvas.value || !ctx) {
     ctx = null;
     return;
   }
+
   ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
 
-  for (var i = 0; i < flakeCount; i++) {
-    var flake = flakes[i],
+  for (let i = 0; i < flakeCount; i++) {
+    let flake = flakes[i],
       x = mX,
       y = mY,
       minDist = 150,
       x2 = flake.x,
       y2 = flake.y;
 
-    var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
+    let dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y));
 
     if (dist < minDist) {
-      var force = minDist / (dist * dist),
+      let force = minDist / (dist * dist),
         xcomp = (x - x2) / dist,
         ycomp = (y - y2) / dist,
         deltaV = force / 2;
@@ -73,22 +88,26 @@ function snow() {
       reset(flake);
     }
 
+    flake.rotation += flake.speed * flake.rotationDirection;
+
     const path2 = new Path2D();
-    let m = new DOMMatrix(`translate(${flake.x}px,${flake.y}px) scale(${2 / flake.size})`);
+    let m = new DOMMatrix(`translate(${flake.x}px,${flake.y}px) scale(${2 / flake.size}) rotate(${flake.rotation}deg)`);
     path2.addPath(p, m);
     ctx.fill(path2);
   }
 
   if (isMounded && canvas.value) requestAnimationFrame(snow);
-};
+}
 
 
 
-function reset(flake) {
+function reset(flake: Flake) {
+  if (!canvas.value) return;
+
   flake.x = Math.floor(Math.random() * canvas.value.width);
   flake.y = -50;
   flake.size = (Math.random() * 3) + 2;
-  flake.speed = (Math.random() * 1) + 0.5;
+  flake.speed = (Math.random()) + 0.5;
   flake.velY = flake.speed;
   flake.velX = 0;
   flake.opacity = (Math.random() * 0.5) + 0.3;
@@ -97,14 +116,16 @@ function reset(flake) {
 
 
 function init() {
+  if (!canvas.value) return;
+
   ctx = canvas.value?.getContext('2d');
 
-  for (var i = 0; i < flakeCount; i++) {
-    var x = Math.floor(Math.random() * canvas.value.width);
-    var y = Math.floor(Math.random() * canvas.value.height) - canvas.value.height;
-    var size = (Math.random() * 3) + 2;
-    var speed = (Math.random() * 1) + 0.5;
-    var opacity = (Math.random() * 0.5) + 0.3;
+  for (let i = 0; i < flakeCount; i++) {
+    let x = Math.floor(Math.random() * canvas.value.width);
+    let y = Math.floor(Math.random() * canvas.value.height) - canvas.value.height;
+    let size = (Math.random() * 3) + 2;
+    let speed = (Math.random()) + 0.5;
+    let opacity = (Math.random() * 0.5) + 0.3;
 
     flakes.push({
       speed: speed,
@@ -116,23 +137,30 @@ function init() {
       stepSize: (Math.random()) / 30,
       step: 0,
       opacity: opacity,
+      rotation: Math.random() * 360,
+      rotationDirection: Math.random() >= 0.5 ? 1 : -1,
     });
   }
 
   snow();
-};
+}
 
-const onMouseMove = function (e) {
+
+
+const onMouseMove = function (e: MouseEvent) {
   mX = e.clientX;
   mY = e.clientY;
 };
 
 const onResize = function () {
+  if (!canvas.value) return;
   canvas.value.width = window.innerWidth;
   canvas.value.height = window.innerHeight;
 };
 
 onMounted(() => {
+  if (!canvas.value) return;
+
   canvas.value.width = window.innerWidth;
   canvas.value.height = window.innerHeight;
   isMounded = true;

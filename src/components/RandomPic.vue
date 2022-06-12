@@ -26,7 +26,7 @@ const picsExceptSelected = computed(() => {
   return picsExceptSelected;
 });
 
-const lovePicLeft = ref(0);
+const lovePicLeft = ref(Infinity);
 const enableLove = () => {
   nextPic.value = null;
   lovePicLeft.value = 5;
