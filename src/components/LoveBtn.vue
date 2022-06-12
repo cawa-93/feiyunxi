@@ -21,17 +21,23 @@ const enableLoveButton = () => {
 };
 
 onMounted(() => {
-  shownTimer = setTimeout(enableLoveButton, TimeoutBeforeShown * 1000);
-});
-
-watch(lovePosition, (pos, old) => {
-  if (pos && old === null) {
-    hideTimer = setTimeout(() => {
-      lovePosition.value = null;
-      shownTimer = setTimeout(enableLoveButton, TimeoutBeforeShown * 1000);
-    }, TimeoutBeforeHide * 1000);
+  if (TimeoutBeforeShown) {
+    shownTimer = setTimeout(enableLoveButton, TimeoutBeforeShown * 1000);
+  } else {
+    enableLoveButton();
   }
 });
+
+if (TimeoutBeforeHide) {
+  watch(lovePosition, (pos, old) => {
+    if (pos && old === null) {
+      hideTimer = setTimeout(() => {
+        lovePosition.value = null;
+        shownTimer = setTimeout(enableLoveButton, TimeoutBeforeShown * 1000);
+      }, TimeoutBeforeHide * 1000);
+    }
+  });
+}
 
 onBeforeUnmount(() => {
   if (shownTimer) clearTimeout(shownTimer);

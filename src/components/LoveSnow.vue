@@ -42,7 +42,7 @@ class Flake {
     this.size = (Math.random() * 3) + 2;
     this.stepSize = (Math.random()) / 30;
     this.step = 0;
-    this.opacity = (Math.random() * 0.5) + 0.3;
+    this.opacity = (Math.random() * 0.7) + 0.5;
     this.rotation = Math.random() * 360;
     this.rotationDirection = Math.random() >= 0.5 ? 1 : -1;
   }
