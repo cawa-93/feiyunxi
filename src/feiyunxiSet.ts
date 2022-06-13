@@ -1,4 +1,2 @@
-import { ImageModule } from "./picSetsNames";
-
-export const regular = import.meta.globEager<ImageModule>('../assets/images/feiyunxi/*');
-export const love = import.meta.globEager<ImageModule>('../assets/images/feiyunxi/love/*');
+export const regular = import.meta.glob('../assets/images/feiyunxi/*', {as: 'url', eager: true});
+export const love = import.meta.glob('../assets/images/feiyunxi/love/*', {as: 'url', eager: true});

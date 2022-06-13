@@ -4,10 +4,6 @@ import RandomPic from "./components/RandomPic.vue";
 import WelcomeCaptcha from "./components/WelcomeCaptcha.vue";
 import { PicSetNames, picSetsNames } from "./picSetsNames";
 
-
-// useHead({
-//   title: 'Alice\'s wonderland',
-// });
 const setName = ref<PicSetNames>();
 const loading = ref(true);
 const set = ref<string[]>([]);
@@ -33,8 +29,8 @@ async function loadSet(name: PicSetNames) {
     }
 
     const {regular, love} = await promise;
-    set.value = Object.values(regular).map(p => p.default);
-    loveSet.value = Object.values(love).map(p => p.default);
+    set.value = Object.values(regular);
+    loveSet.value = Object.values(love);
   } catch (e: any) {
     console.error(e);
     alert('Сталась не передбачувана помилка: ' + e.message || e);
