@@ -11,7 +11,7 @@ const loveSet = ref<string[]>([]);
 
 const feiyunxiPromise = import('./feiyunxiSet');
 const xiaoPromise = import('./xiaoSet');
-const catPromise = import('./xiaoSet');
+const catPromise = import('./catSet');
 
 
 
