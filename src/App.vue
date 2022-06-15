@@ -27,7 +27,7 @@ async function loadSet(name: PicSetNames) {
       case "xiao":
         promise = xiaoPromise;
         break;
-      case "cat.ts":
+      case "cat":
         promise = catPromise;
         break;
     }
