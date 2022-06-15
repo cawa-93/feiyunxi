@@ -1,7 +1,7 @@
 export const picSetsNames = [
   'feiyunxi',
   'xiao',
-  'cat.ts',
+  'cat',
 ] as const;
 
 export type PicSetNames = (typeof picSetsNames)[number]
