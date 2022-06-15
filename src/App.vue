@@ -11,6 +11,7 @@ const loveSet = ref<string[]>([]);
 
 const feiyunxiPromise = import('./feiyunxiSet');
 const xiaoPromise = import('./xiaoSet');
+const catPromise = import('./xiaoSet');
 
 
 
@@ -25,6 +26,9 @@ async function loadSet(name: PicSetNames) {
         break;
       case "xiao":
         promise = xiaoPromise;
+        break;
+      case "cat.ts":
+        promise = catPromise;
         break;
     }
 

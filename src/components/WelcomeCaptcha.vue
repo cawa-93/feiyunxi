@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 
 import { ref } from "vue";
+import { cat } from "../config/captcha/cat";
 import { confirm as confirmMessage } from "../config/captcha/confirm";
 import { error as errorMessage } from "../config/captcha/error";
 import { feiyunxi } from "../config/captcha/feiyunxi";
@@ -12,7 +13,7 @@ const emit = defineEmits({
 
 const caseInSensCompare = (a: string, b: string): boolean => a.toLowerCase().trim() === b.toLowerCase().trim();
 
-const setMatch = (set: string[], search: string) => set.some((s) => caseInSensCompare(s, search));
+const isSetMatched = (set: string[], search: string) => set.some((s) => caseInSensCompare(s, search));
 
 const answer = ref('');
 const error = ref('');
@@ -25,13 +26,18 @@ const submitHandler = () => {
     error.value = errorMessage;
   }
 
-  if (setMatch(xiao, answer.value)) {
+  if (isSetMatched(xiao, answer.value)) {
     emit('passed', 'xiao');
     return;
   }
 
-  if (setMatch(feiyunxi, answer.value)) {
+  if (isSetMatched(feiyunxi, answer.value)) {
     emit('passed', 'feiyunxi');
+    return;
+  }
+
+  if (isSetMatched(cat, answer.value)) {
+    emit('passed', 'cat');
     return;
   }
 

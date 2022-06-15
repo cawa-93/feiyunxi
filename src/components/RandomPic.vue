@@ -55,7 +55,7 @@ onBeforeUnmount(() => document.removeEventListener('click', selectPic));
 
 <template>
   <div>
-    <love-btn v-if="!lovePicLeft" @click.stop="enableLove"></love-btn>
+    <love-btn v-if="!lovePicLeft && loveSet.length > 0" @click.stop="enableLove"></love-btn>
     <img v-if="selectedPicURL" :key="selectedPicURL" :src="selectedPicURL" alt="Супер СЕКСИ Мужик">
     <img v-if="nextPic" :key="nextPic" :src="nextPic" alt="" class="visually-hidden">
     <love-snow
