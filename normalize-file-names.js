@@ -21,6 +21,8 @@ const files = [
   resolve(__dirname, './assets/images/feiyunxi/love'),
   resolve(__dirname, './assets/images/xiao'),
   resolve(__dirname, './assets/images/xiao/love'),
+  resolve(__dirname, './assets/images/cat'),
+  resolve(__dirname, './assets/images/cat/love'),
 ]
   .flatMap(d => readdirSync(d, {withFileTypes: true}).filter(p => p.isFile()).map(f => resolve(d, f.name)),
   );
