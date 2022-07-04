@@ -1,3 +1,5 @@
 export const cat = [
-  'cat',
+  'Chu Wanning',
+  'Чу Ваньнин',
+  '楚 晚 宁',
 ];
