@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, ref } from "vue";
-import { rand } from "../helpers/rand";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { TimeoutBeforeShown } from "../config/loveBtn";
+import { rand, randNum } from "../helpers/rand";
 import LoveBtn from "./LoveBtn.vue";
 import LoveSnow from "./LoveSnow.vue";
 
@@ -10,9 +11,37 @@ const props = defineProps<{
   path: string[],
   color: string
 }>();
-
-
 const pics = computed(() => lovePicLeft.value ? props.loveSet : props.set);
+
+
+type Position = { [s: string]: string, transform: string }
+const lovePosition = ref<(Position) | null>(null);
+
+
+let timeoutId: number | null = null;
+let isLoveBtnTimeoutEnded = false;
+
+
+const changeLoveBtnPosition = () => {
+  if (!isLoveBtnTimeoutEnded) {
+    return;
+  }
+  lovePosition.value = {
+    [(rand(['top', 'bottom']))]: `${randNum(50)}%`,
+    [(rand(['left', 'right']))]: `${randNum(50)}%`,
+    'transform': `rotate(${randNum(45, -45)}deg)`,
+  };
+};
+
+onMounted(() => {
+  timeoutId = setTimeout(() => {
+    isLoveBtnTimeoutEnded = true;
+    // changeLoveBtnPosition();
+  }, TimeoutBeforeShown * 1000);
+});
+onBeforeUnmount(() => {
+  if (timeoutId) clearTimeout(timeoutId);
+});
 
 const selectedPicURL = ref<string | null>(null);
 const nextPic = ref<string | null>(null);
@@ -46,16 +75,23 @@ const selectPic = () => {
   if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
     navigator.vibrate(100);
   }
-};
-selectPic();
 
-document.addEventListener('click', selectPic);
+  changeLoveBtnPosition();
+
+};
+
+onMounted(() => {
+  selectPic();
+  document.addEventListener('click', selectPic);
+});
 onBeforeUnmount(() => document.removeEventListener('click', selectPic));
 </script>
 
 <template>
   <div>
-    <love-btn v-if="!lovePicLeft && loveSet.length > 0" @click.stop="enableLove"></love-btn>
+    <love-btn v-if="!lovePicLeft && loveSet.length > 0 && lovePosition"
+              :style="lovePosition"
+              @click.stop="enableLove"></love-btn>
     <img v-if="selectedPicURL" :key="selectedPicURL" :src="selectedPicURL" alt="Супер СЕКСИ Мужик">
     <img v-if="nextPic" :key="nextPic" :src="nextPic" alt="" class="visually-hidden">
     <love-snow

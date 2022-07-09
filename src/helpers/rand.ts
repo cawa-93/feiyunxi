@@ -5,5 +5,5 @@ export function rand<T extends any>(arr: T[]): T {
 
 
 export function randNum(max: number, min = 0): number {
-    return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * (max - min)) + min;
 }

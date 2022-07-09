@@ -1,2 +1,1 @@
-export const TimeoutBeforeShown = 0;
-export const TimeoutBeforeHide = 0;
+export const TimeoutBeforeShown = 10;
