@@ -9,4 +9,6 @@ export const feiyunxi = [
   'Lo Yunxi',
   'Лео Ло',
   '罗云熙',
+  'Лягушонок',
+  'жаба',
 ]
